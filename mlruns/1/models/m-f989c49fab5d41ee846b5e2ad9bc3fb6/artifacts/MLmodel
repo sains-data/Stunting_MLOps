@@ -1,0 +1,22 @@
+artifact_path: file:///D:/semster 7/MLOPS/Stunting_mlops/mlruns/1/models/m-f989c49fab5d41ee846b5e2ad9bc3fb6/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.2
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.2
+mlflow_version: 3.7.0
+model_id: m-f989c49fab5d41ee846b5e2ad9bc3fb6
+model_size_bytes: 1071285
+model_uuid: m-f989c49fab5d41ee846b5e2ad9bc3fb6
+prompts: null
+run_id: c1bd63c28ea74d508cfe80e4b680158e
+utc_time_created: '2025-12-09 09:58:23.174401'
