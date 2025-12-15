@@ -63,8 +63,9 @@ fastapi
 uvicorn
 joblib
 pydantic
-
+```
 ## Dockerfile
+```text
 # Gunakan base image Python yang ringan
 FROM python:3.9-slim
 
