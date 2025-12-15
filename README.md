@@ -138,7 +138,12 @@ Contoh Input JSON:
   "tinggi_badan": 85.5
 }
 ```
-
+Contoh Output 
+```json
+{
+  "status_gizi": "normal"
+}
+```
 ---
 
 ## 🤖 CI/CD Automation
