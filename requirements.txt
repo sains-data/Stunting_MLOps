@@ -6,3 +6,6 @@ fastapi
 uvicorn
 joblib
 pydantic
+python-multipart
+gradio==4.36.1
+huggingface_hub==0.19.4
