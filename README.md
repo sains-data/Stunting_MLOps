@@ -41,13 +41,49 @@ Tugas Besar Mata Kuliah *Machine Learning Operations* Sains Data - ITERA 2025.
 ├── data/                # Dataset (data_balita.csv)
 ├── models/              # Tempat penyimpanan model (.pkl)
 ├── src/                 # Source Code utama
-│   ├── app.py           # Kode untuk API / Deployment
-│   └── train.py         # Kode untuk Training & Experiment Tracking
+│   ├── app.py           # Kode untuk API / Deployment (FastAPI)
+│   └── train.py         # Kode untuk Training & Experiment Tracking (MLFlow)
 ├── requirements.txt     # Daftar library yang dibutuhkan
+├── Dockerfile           # Konfigurasi Docker Build
 └── README.md            # Dokumentasi Proyek
 ```
 
 ---
+
+## Requirement
+
+File `requirements.txt` berisi dependensi yang dibutuhkan:
+
+```text
+pandas
+scikit-learn
+mlflow
+typer
+fastapi
+uvicorn
+joblib
+pydantic
+```
+## Dockerfile
+```text
+# Gunakan base image Python yang ringan
+FROM python:3.9-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy requirements.txt dan install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy semua file kode, model, dan data
+COPY src/ /app/src/
+COPY models/ /app/models/
+COPY data/ /app/data/
+
+# Tentukan command untuk menjalankan API server
+CMD ["uvicorn", "src.app:app", "--host", "0.0.0.0", "--port", "8000"]
+```
 
 ## 🚀 Cara Menjalankan Project (Reproducibility)
 
@@ -102,7 +138,12 @@ Contoh Input JSON:
   "tinggi_badan": 85.5
 }
 ```
-
+Contoh Output 
+```json
+{
+  "status_gizi": "normal"
+}
+```
 ---
 
 ## 🤖 CI/CD Automation
@@ -114,14 +155,30 @@ Proyek ini telah dilengkapi dengan GitHub Actions. Setiap kali ada push ke branc
 * Menjalankan tes training untuk memastikan kode tidak error.
 * Status build terakhir dapat dilihat di badge di atas.
 
+------
+
+## 🔗 Publikasi dan Deployment Eksternal
+
+Bagian ini menyoroti hasil deployment dan otomatisasi yang telah diterapkan sesuai standar MLOps:
+
+* **Hugging Face Space (Deployment Production):**
+    Model telah di-deploy dan dapat diakses publik melalui link berikut. Anda dapat melakukan pengujian API secara langsung pada URL ini (FastAPI Swagger UI).
+    
+    > **[Hugging Face API Docs]**
+    > **https://dwiratna-prediksi-stunting.hf.space/docs** 
+
+* **GitHub Actions:**
+    Status CI/CD (Continuous Integration/Continuous Deployment) dan pengujian otomatis dapat dipantau melalui *badge* di bagian atas *README*.
+
 ---
 
 ## 👥 Tim Pengembang
 
+Proyek ini dikerjakan oleh tim dari Mata Kuliah MLOps ITERA 2025:
+
 * Siti Nur Aarifah (122450006)
-* Dwi Ratna Anggareni (122450008
+* Dwi Ratna Anggareni (122450008)
 * Cyntia Kristina Sidauruk (122450023)
 * Priska Silvi Ferantiana (122450053)
 
----
 ***Created for Project MLOps 2025***
