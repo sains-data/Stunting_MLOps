@@ -41,13 +41,43 @@ Tugas Besar Mata Kuliah *Machine Learning Operations* Sains Data - ITERA 2025.
 ├── data/                # Dataset (data_balita.csv)
 ├── models/              # Tempat penyimpanan model (.pkl)
 ├── src/                 # Source Code utama
-│   ├── app.py           # Kode untuk API / Deployment
-│   └── train.py         # Kode untuk Training & Experiment Tracking
+│   ├── app.py           # Kode untuk API / Deployment (FastAPI)
+│   └── train.py         # Kode untuk Training & Experiment Tracking (MLFlow)
 ├── requirements.txt     # Daftar library yang dibutuhkan
+├── Dockerfile           # Konfigurasi Docker Build
 └── README.md            # Dokumentasi Proyek
 ```
 
 ---
+
+##requirement.txt
+[cite_start]pandas [cite: 1]
+[cite_start]scikit-learn [cite: 1]
+[cite_start]mlflow [cite: 1]
+[cite_start]typer [cite: 1]
+[cite_start]fastapi [cite: 1]
+[cite_start]uvicorn [cite: 1]
+[cite_start]joblib [cite: 1]
+[cite_start]pydantic [cite: 1]
+
+##dockerfile
+# Gunakan base image Python yang ringan
+FROM python:3.9-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy requirements.txt dan install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy semua file kode, model, dan data
+COPY src/ /app/src/
+COPY models/ /app/models/
+COPY data/ /app/data/
+
+# Tentukan command untuk menjalankan API server
+CMD ["uvicorn", "src.app:app", "--host", "0.0.0.0", "--port", "8000"]
 
 ## 🚀 Cara Menjalankan Project (Reproducibility)
 
