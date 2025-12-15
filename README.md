@@ -116,12 +116,28 @@ Proyek ini telah dilengkapi dengan GitHub Actions. Setiap kali ada push ke branc
 
 ---
 
+## 🔗 Publikasi dan Deployment Eksternal
+
+Bagian ini menyoroti hasil deployment dan otomatisasi yang telah diterapkan sesuai standar MLOps:
+
+* **Hugging Face Space (Deployment Production):**
+    Model telah di-deploy dan dapat diakses publik melalui link berikut. Anda dapat melakukan pengujian API secara langsung pada URL ini (FastAPI Swagger UI).
+    
+    > **[Hugging Face API Docs]**
+    > **https://dwiratna-prediksi-stunting.hf.space/docs** 
+
+* **GitHub Actions:**
+    Status CI/CD (Continuous Integration/Continuous Deployment) dan pengujian otomatis dapat dipantau melalui *badge* di bagian atas *README*.
+
+---
+
 ## 👥 Tim Pengembang
 
+Proyek ini dikerjakan oleh tim dari Mata Kuliah MLOps ITERA 2025:
+
 * Siti Nur Aarifah (122450006)
-* Dwi Ratna Anggareni (122450008
+* Dwi Ratna Anggareni (122450008)
 * Cyntia Kristina Sidauruk (122450023)
 * Priska Silvi Ferantiana (122450053)
 
----
 ***Created for Project MLOps 2025***
