@@ -1,6 +1,9 @@
 # 👶 Stunting Prediction MLOps Project
 
 ![CI/CD Pipeline](https://github.com/sains-data/Stunting_MLOps/actions/workflows/main.yml/badge.svg)
+![Streamlit](https://img.shields.io/badge/Streamlit-App-red)
+![Docker](https://img.shields.io/badge/Docker-Container-blue)
+![MLflow](https://img.shields.io/badge/MLflow-Tracking-orange)
 
 Proyek ini adalah implementasi *End-to-End Machine Learning Operations (MLOps)* untuk mendeteksi status stunting pada balita. Proyek ini mencakup pipeline mulai dari *Data Ingestion*, *Preprocessing*, *Model Training*, *Experiment Tracking*, hingga *Model Serving* menggunakan API.
 
@@ -15,10 +18,10 @@ Tugas Besar Mata Kuliah *Machine Learning Operations* Sains Data - ITERA 2025.
 | **🔍 Background** | Stunting adalah gangguan pertumbuhan kronis pada anak akibat kurang gizi. Deteksi dini seringkali terlambat karena kurangnya alat bantu prediksi cepat di tingkat Posyandu. |
 | **💎 Value Proposition** | Menyediakan API prediksi otomatis yang dapat membantu tenaga kesehatan/orang tua mengetahui status gizi balita secara *real-time* dan akurat. |
 | **🎯 Objectives** | Membangun model klasifikasi dengan akurasi tinggi dan men-deploy-nya ke sistem produksi yang terotomatisasi. |
-| **🧠 Solution** | Menggunakan algoritma **Support Vector Machine (SVM)** dengan pipeline preprocessing otomatis (OneHotEncoding & Scaling). |
+| **🧠 Solution** | Menggunakan algoritma **Random Forest** dengan pipeline preprocessing otomatis (OneHotEncoding & Scaling). |
 | **📊 Data** | Dataset Balita yang mencakup fitur: `Umur (bulan)`, `Jenis Kelamin`, `Tinggi Badan (cm)`. Target: `Status Gizi`. |
 | **📈 Metrics** | Evaluasi model menggunakan **Accuracy**, **Precision**, dan **Recall** untuk meminimalkan kesalahan deteksi. |
-| **🚀 Inference** | **Online Inference** menggunakan REST API (FastAPI). |
+| **🚀 Inference** | **Web Interface** menggunakan Streamlit (User Friendly). |
 
 ---
 
@@ -26,9 +29,9 @@ Tugas Besar Mata Kuliah *Machine Learning Operations* Sains Data - ITERA 2025.
 
 * **Bahasa Pemrograman:** Python 3.9+
 * **Data & Modeling:** Pandas, Scikit-Learn
+* **Web Framework:** Streamlit
 * **Experiment Tracking:** MLFlow (Mencatat metrik akurasi & parameter tiap training)
-* **Command Line Interface (CLI):** Typer
-* **API / Model Serving:** FastAPI & Uvicorn
+* **Containerization**: Docker
 * **Version Control:** Git & GitHub
 * **CI/CD Automation:** GitHub Actions (Automated Testing)
 
@@ -40,9 +43,12 @@ Tugas Besar Mata Kuliah *Machine Learning Operations* Sains Data - ITERA 2025.
 ├── .github/workflows/   # Konfigurasi CI/CD (GitHub Actions)
 ├── data/                # Dataset (data_balita.csv)
 ├── models/              # Tempat penyimpanan model (.pkl)
+├── mlruns/              # Artifacts hasil training MLflow
 ├── src/                 # Source Code utama
-│   ├── app.py           # Kode untuk API / Deployment (FastAPI)
-│   └── train.py         # Kode untuk Training & Experiment Tracking (MLFlow)
+│   ├── app.py           # Kode utama aplikasi Streamlit
+│   └── train.py         # Kode Training & Tracking MLflow
+├── mlflow.db            # Database SQLite untuk mencatat history eksperimen
+├── monitoring_log.csv   # Log data input user (Real-time)
 ├── requirements.txt     # Daftar library yang dibutuhkan
 ├── Dockerfile           # Konfigurasi Docker Build
 └── README.md            # Dokumentasi Proyek
@@ -50,7 +56,7 @@ Tugas Besar Mata Kuliah *Machine Learning Operations* Sains Data - ITERA 2025.
 
 ---
 
-## Requirement
+## 📋 Requirement
 
 File `requirements.txt` berisi dependensi yang dibutuhkan:
 
@@ -64,7 +70,9 @@ uvicorn
 joblib
 pydantic
 ```
-## Dockerfile
+--- 
+
+## 🐳 Dockerfile
 ```text
 # Gunakan base image Python yang ringan
 FROM python:3.9-slim
@@ -84,6 +92,7 @@ COPY data/ /app/data/
 # Tentukan command untuk menjalankan API server
 CMD ["uvicorn", "src.app:app", "--host", "0.0.0.0", "--port", "8000"]
 ```
+---
 
 ## 🚀 Cara Menjalankan Project (Reproducibility)
 
@@ -115,15 +124,15 @@ python src/train.py
 Output: Model tersimpan sebagai models/model_stunting.pkl.
 ```
 
-### 4️⃣ Menjalankan API (Deployment)
-
-Aktifkan server FastAPI untuk melakukan prediksi:
+### 4️⃣ Menjalankan Aplikasi (Streamlit)
+Setelah model terbentuk, jalankan aplikasi web untuk melakukan prediksi:
 
 ```bash
 Copy code
-uvicorn src.app:app --reload
-Server akan berjalan di: http://127.0.0.1:8000
+streamlit run src/app.py
 ```
+*>Aplikasi akan berjalan di: http://localhost:8501*
+
 
 ### 5️⃣ Uji Coba (Testing)
 
@@ -155,7 +164,19 @@ Proyek ini telah dilengkapi dengan GitHub Actions. Setiap kali ada push ke branc
 * Menjalankan tes training untuk memastikan kode tidak error.
 * Status build terakhir dapat dilihat di badge di atas.
 
-------
+---
+
+## 🔬 Monitoring Eksperimen
+Untuk melihat grafik akurasi, perbandingan model, dan parameter training:
+
+Jalankan perintah berikut di terminal (menggunakan database SQLite):
+
+```Bash
+mlflow ui --backend-store-uri sqlite:///mlflow.db
+```
+*Buka browser dan akses: http://localhost:5000*
+
+--- 
 
 ## 🔗 Publikasi dan Deployment Eksternal
 
