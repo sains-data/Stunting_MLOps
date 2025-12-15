@@ -82,7 +82,7 @@ COPY data/ /app/data/
 
 # Tentukan command untuk menjalankan API server
 CMD ["uvicorn", "src.app:app", "--host", "0.0.0.0", "--port", "8000"]
-
+```
 
 ## 🚀 Cara Menjalankan Project (Reproducibility)
 
