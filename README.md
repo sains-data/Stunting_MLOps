@@ -124,15 +124,6 @@ python src/train.py
 Output: Model tersimpan sebagai models/model_stunting.pkl.
 ```
 
-### 4️⃣ Menjalankan Aplikasi (Streamlit)
-Setelah model terbentuk, jalankan aplikasi web untuk melakukan prediksi:
-
-```bash
-Copy code
-streamlit run src/app.py
-```
-*>Aplikasi akan berjalan di: http://localhost:8501*
-
 
 ### 5️⃣ Uji Coba (Testing)
 
